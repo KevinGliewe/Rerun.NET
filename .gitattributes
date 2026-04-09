@@ -1,0 +1,23 @@
+# Normalize line endings to LF in the repo, checkout as native
+* text=auto
+
+# Generated code always LF (codegen runs on Linux CI)
+*.g.cs text eol=lf
+*.cs text eol=lf
+*.csproj text eol=lf
+*.slnx text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.targets text eol=lf
+*.props text eol=lf
+*.sh text eol=lf
+
+# Binary files
+*.rrd binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.pdb binary
+*.nupkg binary

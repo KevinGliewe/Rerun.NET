@@ -1,0 +1,31 @@
+{
+  "name": "Rerun.NET",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:8.0",
+  "features": {
+    "ghcr.io/devcontainers/features/rust:1": {
+      "version": "latest"
+    }
+  },
+  "postCreateCommand": "git submodule update --init --recursive && dotnet restore Rerun.Net.slnx",
+  "postStartCommand": "bash .devcontainer/build-native.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "rust-lang.rust-analyzer"
+      ],
+      "settings": {
+        "dotnet.defaultSolution": "Rerun.Net.slnx",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "forwardPorts": [9876],
+  "portsAttributes": {
+    "9876": {
+      "label": "Rerun gRPC",
+      "onAutoForward": "silent"
+    }
+  }
+}

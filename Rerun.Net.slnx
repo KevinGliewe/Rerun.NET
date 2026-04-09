@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/examples/">
+    <Project Path="examples/Arrows3DSpiral/Arrows3DSpiral.csproj" />
+    <Project Path="examples/ClearDemo/ClearDemo.csproj" />
+    <Project Path="examples/Clock/Clock.csproj" />
+    <Project Path="examples/DNA/DNA.csproj" />
+    <Project Path="examples/GraphLattice/GraphLattice.csproj" />
+    <Project Path="examples/Graphs/Graphs.csproj" />
+    <Project Path="examples/IncrementalLogging/IncrementalLogging.csproj" />
+    <Project Path="examples/LineStrips3DCube/LineStrips3DCube.csproj" />
+    <Project Path="examples/LiveScrollingPlot/LiveScrollingPlot.csproj" />
+    <Project Path="examples/Minimal/Minimal.csproj" />
+    <Project Path="examples/MinimalExample/MinimalExample.csproj" />
+    <Project Path="examples/Multithreading/Multithreading.csproj" />
+    <Project Path="examples/Plots/Plots.csproj" />
+    <Project Path="examples/RrtStar/RrtStar.csproj" />
+    <Project Path="examples/ScalarPlot/ScalarPlot.csproj" />
+    <Project Path="examples/TextLogging/TextLogging.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Rerun.Net.CodeGen/Rerun.Net.CodeGen.csproj" />
+    <Project Path="src/Rerun.Net/Rerun.Net.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Rerun.Net.IntegrationTests/Rerun.Net.IntegrationTests.csproj" />
+    <Project Path="tests/Rerun.Net.Tests/Rerun.Net.Tests.csproj" />
+  </Folder>
+</Solution>

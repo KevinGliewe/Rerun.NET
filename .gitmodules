@@ -1,0 +1,3 @@
+[submodule "extern/rerun"]
+	path = extern/rerun
+	url = https://github.com/rerun-io/rerun

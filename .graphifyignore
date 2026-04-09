@@ -1,0 +1,14 @@
+extern/
+bin/
+obj/
+target/
+runtimes/
+artifacts/
+.vs/
+.idea/
+TestResults/
+*.g.cs
+*.rrd
+*.pdb
+*.nupkg
+tests/Rerun.Net.IntegrationTests/RustReference/

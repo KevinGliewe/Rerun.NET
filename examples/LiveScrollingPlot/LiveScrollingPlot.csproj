@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Rerun.Net\Rerun.Net.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\runtimes\**\*" CopyToOutputDirectory="PreserveNewest" LinkBase="runtimes" />
+  </ItemGroup>
+</Project>

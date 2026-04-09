@@ -1,0 +1,127 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["build", "Rerun.Net.slnx"],
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "test",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["test", "Rerun.Net.slnx"],
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "test:unit",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["test", "tests/Rerun.Net.Tests"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "test:integration",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["test", "tests/Rerun.Net.IntegrationTests"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "codegen",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "run", "--project", "src/Rerun.Net.CodeGen", "--",
+        "extern/rerun/crates/store/re_sdk_types/definitions/rerun",
+        "src/Rerun.Net"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build:native",
+      "type": "shell",
+      "command": "bash",
+      "args": [".devcontainer/build-native.sh"],
+      "windows": {
+        "command": "cd extern/rerun && cargo rustc -p rerun_c --release --crate-type cdylib && cd ../.. && if not exist runtimes\\win-x64\\native mkdir runtimes\\win-x64\\native && copy extern\\rerun\\target\\release\\rerun_c.dll runtimes\\win-x64\\native\\rerun_c.dll"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "build:rerun-cli",
+      "type": "shell",
+      "command": "cd extern/rerun && cargo build -p rerun-cli --release --no-default-features",
+      "problemMatcher": []
+    },
+    {
+      "label": "pack",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["pack", "src/Rerun.Net", "-c", "Release", "-o", "artifacts"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "run:example",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["run", "--project", "examples/${input:example}"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "run:example --spawn",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["run", "--project", "examples/${input:example}", "--", "--spawn"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "codegen:check",
+      "type": "shell",
+      "command": "dotnet run --project src/Rerun.Net.CodeGen -- extern/rerun/crates/store/re_sdk_types/definitions/rerun src/Rerun.Net && git diff --exit-code src/Rerun.Net/Datatypes/ src/Rerun.Net/Components/ src/Rerun.Net/Archetypes/",
+      "problemMatcher": []
+    },
+    {
+      "label": "clean",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["clean", "Rerun.Net.slnx"],
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "example",
+      "description": "Example project to run",
+      "type": "pickString",
+      "options": [
+        "MinimalExample",
+        "Minimal",
+        "Clock",
+        "DNA",
+        "Graphs",
+        "Plots",
+        "ScalarPlot",
+        "RrtStar",
+        "Multithreading",
+        "IncrementalLogging",
+        "LiveScrollingPlot",
+        "GraphLattice",
+        "Arrows3DSpiral",
+        "LineStrips3DCube",
+        "TextLogging",
+        "ClearDemo"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Native library resolution for Rerun.Net.
+    Files under runtimes/{rid}/native/ are automatically handled by the .NET SDK
+    for self-contained and RID-specific builds. This targets file ensures the
+    native library is also copied for non-RID-specific (portable) builds by
+    adding it as a NativeLibrary item.
+  -->
+  <ItemGroup Condition="'$(RuntimeIdentifier)' != ''">
+    <NativeLibrary Include="$(MSBuildThisFileDirectory)..\runtimes\$(RuntimeIdentifier)\native\*"
+                   Condition="Exists('$(MSBuildThisFileDirectory)..\runtimes\$(RuntimeIdentifier)\native\')" />
+  </ItemGroup>
+</Project>

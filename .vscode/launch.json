@@ -1,0 +1,63 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Example",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/examples/${input:example}/bin/Debug/net8.0/${input:example}.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Run Example (--spawn)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/examples/${input:example}/bin/Debug/net8.0/${input:example}.dll",
+      "args": ["--spawn"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Run CodeGen",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/Rerun.Net.CodeGen/bin/Debug/net8.0/Rerun.Net.CodeGen.dll",
+      "args": [
+        "extern/rerun/crates/store/re_sdk_types/definitions/rerun",
+        "src/Rerun.Net"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "example",
+      "description": "Example project to run",
+      "type": "pickString",
+      "options": [
+        "MinimalExample",
+        "Minimal",
+        "Clock",
+        "DNA",
+        "Graphs",
+        "Plots",
+        "ScalarPlot",
+        "RrtStar",
+        "Multithreading",
+        "IncrementalLogging",
+        "LiveScrollingPlot",
+        "GraphLattice",
+        "Arrows3DSpiral",
+        "LineStrips3DCube",
+        "TextLogging",
+        "ClearDemo"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[package]
+name = "rrd-reference-gen"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rerun = { path = "../../../extern/rerun/crates/top/rerun" }

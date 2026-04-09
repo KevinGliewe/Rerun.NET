@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Rerun.Net</RootNamespace>
+    <AssemblyName>Rerun.Net</AssemblyName>
+    <PackageId>Rerun.Net</PackageId>
+    <Version>0.32.0-alpha.1</Version>
+    <Description>C# SDK for Rerun - visualization infrastructure for multimodal data</Description>
+    <Authors>Kevin Gliewe</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/KevinGliewe/Rerun.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/KevinGliewe/Rerun.NET</RepositoryUrl>
+    <PackageTags>rerun;visualization;robotics;point-cloud;3d;logging</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Apache.Arrow" Version="18.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Rerun.Net.Tests" />
+    <InternalsVisibleTo Include="Rerun.Net.IntegrationTests" />
+  </ItemGroup>
+
+  <!-- Native library packaging: include all RID-specific native binaries -->
+  <ItemGroup>
+    <None Include="..\..\runtimes\**\*" Pack="true" PackagePath="runtimes" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <!-- .targets for both direct and transitive consumers -->
+  <ItemGroup>
+    <None Include="Rerun.Net.targets" Pack="true" PackagePath="build" />
+    <None Include="Rerun.Net.targets" Pack="true" PackagePath="buildTransitive" />
+  </ItemGroup>
+
+</Project>
