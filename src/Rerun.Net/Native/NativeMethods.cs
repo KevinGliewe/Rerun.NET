@@ -68,10 +68,9 @@ internal static partial class NativeMethods
         uint stream, float timeoutSec, ref RrError error);
 
     [LibraryImport(LibraryName, EntryPoint = "rr_recording_stream_serve_grpc")]
-    internal static unsafe partial void RrRecordingStreamServeGrpc(
+    internal static partial void RrRecordingStreamServeGrpc(
         uint stream, RrString bindIp, ushort port, RrString serverMemoryLimit,
         [MarshalAs(UnmanagedType.U1)] bool newestFirst,
-        RrString* corsAllowOrigins, uint numCorsAllowOrigins,
         ref RrError error);
 
     [LibraryImport(LibraryName, EntryPoint = "rr_recording_stream_set_sinks")]

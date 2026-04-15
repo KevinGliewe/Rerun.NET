@@ -15,15 +15,15 @@ namespace Rerun.Net.Components;
 /// The box extends both in negative and positive direction along each axis.
 /// Negative sizes indicate that the box is flipped along the respective axis, but this has no effect on how it is displayed.
 /// </summary>
-public readonly record struct HalfSize3D(Vec3D Xyz) : ILoggable<HalfSize3D>
+public readonly record struct HalfSize3D(Datatypes.Vec3D Xyz) : ILoggable<HalfSize3D>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.HalfSize3D");
 
     public static IArrowArray ToArrow(ReadOnlySpan<HalfSize3D> data)
     {
-        var inner = new Vec3D[data.Length];
+        var inner = new Datatypes.Vec3D[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Xyz;
-        return Vec3D.ToArrow(inner);
+        return Datatypes.Vec3D.ToArrow(inner);
     }
 }

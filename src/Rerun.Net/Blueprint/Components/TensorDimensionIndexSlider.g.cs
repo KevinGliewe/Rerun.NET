@@ -13,15 +13,15 @@ namespace Rerun.Net.Blueprint.Components;
 /// <summary>
 /// Show a slider for the index of some dimension of a slider.
 /// </summary>
-public readonly record struct TensorDimensionIndexSlider(Datatypes.TensorDimensionIndexSlider Selection) : ILoggable<TensorDimensionIndexSlider>
+public readonly record struct TensorDimensionIndexSlider(global::Rerun.Net.Blueprint.Datatypes.TensorDimensionIndexSlider Selection) : ILoggable<TensorDimensionIndexSlider>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.TensorDimensionIndexSlider");
 
     public static IArrowArray ToArrow(ReadOnlySpan<TensorDimensionIndexSlider> data)
     {
-        var inner = new Datatypes.TensorDimensionIndexSlider[data.Length];
+        var inner = new global::Rerun.Net.Blueprint.Datatypes.TensorDimensionIndexSlider[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Selection;
-        return Datatypes.TensorDimensionIndexSlider.ToArrow(inner);
+        return global::Rerun.Net.Blueprint.Datatypes.TensorDimensionIndexSlider.ToArrow(inner);
     }
 }

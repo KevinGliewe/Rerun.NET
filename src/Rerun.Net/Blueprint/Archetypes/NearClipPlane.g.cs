@@ -20,14 +20,14 @@ public sealed partial class NearClipPlane : IAsComponents
 
     public NearClipPlane() { }
 
-    public NearClipPlane WithNearClipPlaneValue(ReadOnlySpan<Components.NearClipPlane> near_clip_plane)
+    public NearClipPlane WithNearClipPlaneValue(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.NearClipPlane> near_clip_plane)
     {
         NearClipPlaneValue = ComponentBatch.FromLoggable(near_clip_plane,
             new ComponentDescriptor(ArchetypeName, "NearClipPlane:near_clip_plane", "rerun.blueprint.components.NearClipPlane"));
         return this;
     }
 
-    public NearClipPlane WithNearClipPlaneValue(params Components.NearClipPlane[] near_clip_plane) => WithNearClipPlaneValue(near_clip_plane.AsSpan());
+    public NearClipPlane WithNearClipPlaneValue(params global::Rerun.Net.Blueprint.Components.NearClipPlane[] near_clip_plane) => WithNearClipPlaneValue(near_clip_plane.AsSpan());
 
     /// <summary>Create an empty NearClipPlane for partial updates. Use With*() to set fields.</summary>
     public static NearClipPlane UpdateFields() => new();

@@ -15,15 +15,15 @@ namespace Rerun.Net.Components;
 /// The box extends both in negative and positive direction along each axis.
 /// Negative sizes indicate that the box is flipped along the respective axis, but this has no effect on how it is displayed.
 /// </summary>
-public readonly record struct HalfSize2D(Vec2D Xy) : ILoggable<HalfSize2D>
+public readonly record struct HalfSize2D(Datatypes.Vec2D Xy) : ILoggable<HalfSize2D>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.HalfSize2D");
 
     public static IArrowArray ToArrow(ReadOnlySpan<HalfSize2D> data)
     {
-        var inner = new Vec2D[data.Length];
+        var inner = new Datatypes.Vec2D[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Xy;
-        return Vec2D.ToArrow(inner);
+        return Datatypes.Vec2D.ToArrow(inner);
     }
 }

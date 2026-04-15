@@ -14,15 +14,15 @@ namespace Rerun.Net.Components;
 /// datastore as provided, when used in the Viewer, quaternions will always be normalized.
 /// If normalization fails the rotation is treated as an invalid transform.
 /// </summary>
-public readonly record struct RotationQuat(Quaternion Quaternion) : ILoggable<RotationQuat>
+public readonly record struct RotationQuat(Datatypes.Quaternion Quaternion) : ILoggable<RotationQuat>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.RotationQuat");
 
     public static IArrowArray ToArrow(ReadOnlySpan<RotationQuat> data)
     {
-        var inner = new Quaternion[data.Length];
+        var inner = new Datatypes.Quaternion[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Quaternion;
-        return Quaternion.ToArrow(inner);
+        return Datatypes.Quaternion.ToArrow(inner);
     }
 }

@@ -4,7 +4,7 @@
     <RootNamespace>Rerun.Net</RootNamespace>
     <AssemblyName>Rerun.Net</AssemblyName>
     <PackageId>Rerun.Net</PackageId>
-    <Version>0.32.0-alpha.1</Version>
+    <Version>0.31.3</Version>
     <Description>C# SDK for Rerun - visualization infrastructure for multimodal data</Description>
     <Authors>Kevin Gliewe</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

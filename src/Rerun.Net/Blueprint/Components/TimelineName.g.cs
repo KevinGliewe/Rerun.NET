@@ -13,15 +13,15 @@ namespace Rerun.Net.Blueprint.Components;
 /// <summary>
 /// A timeline identified by its name.
 /// </summary>
-public readonly record struct TimelineName(Utf8 Value) : ILoggable<TimelineName>
+public readonly record struct TimelineName(global::Rerun.Net.Datatypes.Utf8 Value) : ILoggable<TimelineName>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.TimelineName");
 
     public static IArrowArray ToArrow(ReadOnlySpan<TimelineName> data)
     {
-        var inner = new Utf8[data.Length];
+        var inner = new global::Rerun.Net.Datatypes.Utf8[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Value;
-        return Utf8.ToArrow(inner);
+        return global::Rerun.Net.Datatypes.Utf8.ToArrow(inner);
     }
 }

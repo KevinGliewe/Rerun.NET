@@ -13,15 +13,15 @@ namespace Rerun.Net.Blueprint.Components;
 /// <summary>
 /// Configuration for the filter is not null feature of the dataframe view.
 /// </summary>
-public readonly record struct FilterIsNotNull(Datatypes.FilterIsNotNull FilterIsNotNullValue) : ILoggable<FilterIsNotNull>
+public readonly record struct FilterIsNotNull(global::Rerun.Net.Blueprint.Datatypes.FilterIsNotNull FilterIsNotNullValue) : ILoggable<FilterIsNotNull>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.FilterIsNotNull");
 
     public static IArrowArray ToArrow(ReadOnlySpan<FilterIsNotNull> data)
     {
-        var inner = new Datatypes.FilterIsNotNull[data.Length];
+        var inner = new global::Rerun.Net.Blueprint.Datatypes.FilterIsNotNull[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].FilterIsNotNullValue;
-        return Datatypes.FilterIsNotNull.ToArrow(inner);
+        return global::Rerun.Net.Blueprint.Datatypes.FilterIsNotNull.ToArrow(inner);
     }
 }

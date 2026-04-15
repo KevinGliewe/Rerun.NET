@@ -13,14 +13,14 @@ namespace Rerun.Net.Components;
 /// This component can be used to attach arbitrary metadata or annotations to entities.
 /// Each key-value pair is stored as a UTF-8 string mapping.
 /// </summary>
-public readonly record struct KeyValuePairs(Utf8Pair[] Pairs) : ILoggable<KeyValuePairs>
+public readonly record struct KeyValuePairs(Datatypes.Utf8Pair[] Pairs) : ILoggable<KeyValuePairs>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.KeyValuePairs");
 
     public static IArrowArray ToArrow(ReadOnlySpan<KeyValuePairs> data)
     {
         // Flatten all inner arrays and build offsets for ListArray
-        var allItems = new System.Collections.Generic.List<Utf8Pair>();
+        var allItems = new System.Collections.Generic.List<Datatypes.Utf8Pair>();
         var offsets = new Int32Array.Builder();
         offsets.Append(0);
         foreach (var v in data)
@@ -29,7 +29,7 @@ public readonly record struct KeyValuePairs(Utf8Pair[] Pairs) : ILoggable<KeyVal
                 allItems.Add(item);
             offsets.Append(allItems.Count);
         }
-        var valuesArray = Utf8Pair.ToArrow(allItems.ToArray());
+        var valuesArray = Datatypes.Utf8Pair.ToArrow(allItems.ToArray());
         var offsetsArray = offsets.Build();
         var listType = new Apache.Arrow.Types.ListType(
             new Apache.Arrow.Field("item", valuesArray.Data.DataType, false));

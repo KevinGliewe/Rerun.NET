@@ -12,15 +12,15 @@ namespace Rerun.Net.Components;
 /// 
 /// To interpret the contents of this buffer, see, [components.ImageFormat].
 /// </summary>
-public readonly record struct ImageBuffer(Blob Buffer) : ILoggable<ImageBuffer>
+public readonly record struct ImageBuffer(Datatypes.Blob Buffer) : ILoggable<ImageBuffer>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.ImageBuffer");
 
     public static IArrowArray ToArrow(ReadOnlySpan<ImageBuffer> data)
     {
-        var inner = new Blob[data.Length];
+        var inner = new Datatypes.Blob[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Buffer;
-        return Blob.ToArrow(inner);
+        return Datatypes.Blob.ToArrow(inner);
     }
 }

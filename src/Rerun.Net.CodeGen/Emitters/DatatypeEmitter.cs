@@ -4,6 +4,13 @@ namespace Rerun.Net.CodeGen.Emitters;
 
 internal class DatatypeEmitter : EmitterBase
 {
+    private readonly TypeRegistry? _registry;
+
+    public DatatypeEmitter(TypeRegistry? registry = null)
+    {
+        _registry = registry;
+    }
+
     // Primitive-wrapper datatypes that clash with System types.
     // Components referencing them can optionally inline the primitive Arrow directly.
     internal static readonly Dictionary<string, string> PrimitiveWrapperTypes = new()
@@ -272,6 +279,14 @@ internal class DatatypeEmitter : EmitterBase
                         var primBuilder = MapPrimitiveToArrowBuilder(prim);
                         sb.AppendLine($"        var {f.Name}Builder = new {primBuilder}();");
                         sb.AppendLine($"        foreach (var v in data) {f.Name}Builder.Append(v.{fPropName});");
+                        sb.AppendLine($"        var {f.Name}Array = (IArrowArray){f.Name}Builder.Build();");
+                        break;
+                    case FbsReference r when _registry?.Resolve(r.FullyQualifiedName) is FbsEnum enumType:
+                        // Enum-typed reference field: cast to underlying primitive and use a primitive Arrow builder.
+                        var enumPrimCs = MapPrimitiveToCSharp(enumType.UnderlyingType);
+                        var enumPrimBuilder = MapPrimitiveToArrowBuilder(enumType.UnderlyingType);
+                        sb.AppendLine($"        var {f.Name}Builder = new {enumPrimBuilder}();");
+                        sb.AppendLine($"        foreach (var v in data) {f.Name}Builder.Append(({enumPrimCs})v.{fPropName});");
                         sb.AppendLine($"        var {f.Name}Array = (IArrowArray){f.Name}Builder.Build();");
                         break;
                     case FbsReference r:

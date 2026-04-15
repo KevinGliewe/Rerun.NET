@@ -17,14 +17,14 @@ public sealed partial class MapZoom : IAsComponents
 
     public MapZoom() { }
 
-    public MapZoom WithZoom(ReadOnlySpan<Components.ZoomLevel> zoom)
+    public MapZoom WithZoom(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.ZoomLevel> zoom)
     {
         Zoom = ComponentBatch.FromLoggable(zoom,
             new ComponentDescriptor(ArchetypeName, "MapZoom:zoom", "rerun.blueprint.components.ZoomLevel"));
         return this;
     }
 
-    public MapZoom WithZoom(params Components.ZoomLevel[] zoom) => WithZoom(zoom.AsSpan());
+    public MapZoom WithZoom(params global::Rerun.Net.Blueprint.Components.ZoomLevel[] zoom) => WithZoom(zoom.AsSpan());
 
     /// <summary>Create an empty MapZoom for partial updates. Use With*() to set fields.</summary>
     public static MapZoom UpdateFields() => new();

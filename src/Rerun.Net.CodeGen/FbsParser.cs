@@ -140,15 +140,15 @@ internal class FbsParser
 
         return kind switch
         {
-            "struct" => new FbsStruct(name, ns, ParseFields(body), attrs, doc),
-            "table" => new FbsTable(name, ns, ParseFields(body), attrs, doc),
+            "struct" => new FbsStruct(name, ns, ParseFields(body, ns), attrs, doc),
+            "table" => new FbsTable(name, ns, ParseFields(body, ns), attrs, doc),
             "enum" => new FbsEnum(name, ns, underlying, ParseEnumValues(body), attrs, doc),
             "union" => new FbsUnion(name, ns, ParseUnionVariants(body), attrs, doc),
             _ => null,
         };
     }
 
-    private List<FbsField> ParseFields(string body)
+    private List<FbsField> ParseFields(string body, string currentNamespace)
     {
         var fields = new List<FbsField>();
         var docBuffer = new List<string>();
@@ -185,20 +185,20 @@ internal class FbsParser
                 fieldAttrs.Remove("order");
             }
 
-            var fieldType = ParseFieldType(typeStr);
+            var fieldType = ParseFieldType(typeStr, currentNamespace);
             fields.Add(new FbsField(fieldName, fieldType, fieldAttrs, nullable, order, doc));
         }
 
         return fields.OrderBy(f => f.Order).ToList();
     }
 
-    private FbsFieldType ParseFieldType(string typeStr)
+    private FbsFieldType ParseFieldType(string typeStr, string currentNamespace = "")
     {
         // Fixed array: [type: N]
         var fixedMatch = Regex.Match(typeStr, @"^\[(\w+)\s*:\s*(\d+)\]$");
         if (fixedMatch.Success)
         {
-            var elemType = ParseFieldType(fixedMatch.Groups[1].Value);
+            var elemType = ParseFieldType(fixedMatch.Groups[1].Value, currentNamespace);
             return new FbsFixedArray(elemType, int.Parse(fixedMatch.Groups[2].Value));
         }
 
@@ -206,7 +206,7 @@ internal class FbsParser
         var arrayMatch = Regex.Match(typeStr, @"^\[(.+)\]$");
         if (arrayMatch.Success)
         {
-            var elemType = ParseFieldType(arrayMatch.Groups[1].Value);
+            var elemType = ParseFieldType(arrayMatch.Groups[1].Value, currentNamespace);
             return new FbsArray(elemType);
         }
 
@@ -214,7 +214,9 @@ internal class FbsParser
         if (Primitives.Contains(typeStr))
             return new FbsPrimitive(typeStr);
 
-        // Qualified reference
+        // Reference: qualify same-namespace shorthand with the current namespace.
+        if (!typeStr.Contains('.') && currentNamespace.Length > 0)
+            return new FbsReference($"{currentNamespace}.{typeStr}");
         return new FbsReference(typeStr);
     }
 

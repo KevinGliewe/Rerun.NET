@@ -15,15 +15,15 @@ namespace Rerun.Net.Components;
 /// 
 /// Keyframes may require additional data, for details see [components.VideoCodec].
 /// </summary>
-public readonly record struct VideoSample(Blob Buffer) : ILoggable<VideoSample>
+public readonly record struct VideoSample(Datatypes.Blob Buffer) : ILoggable<VideoSample>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.VideoSample");
 
     public static IArrowArray ToArrow(ReadOnlySpan<VideoSample> data)
     {
-        var inner = new Blob[data.Length];
+        var inner = new Datatypes.Blob[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Buffer;
-        return Blob.ToArrow(inner);
+        return Datatypes.Blob.ToArrow(inner);
     }
 }

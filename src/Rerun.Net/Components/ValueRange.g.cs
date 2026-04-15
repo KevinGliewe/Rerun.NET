@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// Range of expected or valid values, specifying a lower and upper bound.
 /// </summary>
-public readonly record struct ValueRange(Range1D Range) : ILoggable<ValueRange>
+public readonly record struct ValueRange(Datatypes.Range1D Range) : ILoggable<ValueRange>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.ValueRange");
 
     public static IArrowArray ToArrow(ReadOnlySpan<ValueRange> data)
     {
-        var inner = new Range1D[data.Length];
+        var inner = new Datatypes.Range1D[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Range;
-        return Range1D.ToArrow(inner);
+        return Datatypes.Range1D.ToArrow(inner);
     }
 }

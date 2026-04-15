@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// An edge in a graph connecting two nodes.
 /// </summary>
-public readonly record struct GraphEdge(Utf8Pair Edge) : ILoggable<GraphEdge>
+public readonly record struct GraphEdge(Datatypes.Utf8Pair Edge) : ILoggable<GraphEdge>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.GraphEdge");
 
     public static IArrowArray ToArrow(ReadOnlySpan<GraphEdge> data)
     {
-        var inner = new Utf8Pair[data.Length];
+        var inner = new Datatypes.Utf8Pair[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Edge;
-        return Utf8Pair.ToArrow(inner);
+        return Datatypes.Utf8Pair.ToArrow(inner);
     }
 }

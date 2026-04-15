@@ -12,15 +12,15 @@ namespace Rerun.Net.Components;
 /// 
 /// Typically in integer units, but for some use cases floating point may be used.
 /// </summary>
-public readonly record struct Resolution(Vec2D ResolutionValue) : ILoggable<Resolution>
+public readonly record struct Resolution(Datatypes.Vec2D ResolutionValue) : ILoggable<Resolution>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.Resolution");
 
     public static IArrowArray ToArrow(ReadOnlySpan<Resolution> data)
     {
-        var inner = new Vec2D[data.Length];
+        var inner = new Datatypes.Vec2D[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].ResolutionValue;
-        return Vec2D.ToArrow(inner);
+        return Datatypes.Vec2D.ToArrow(inner);
     }
 }

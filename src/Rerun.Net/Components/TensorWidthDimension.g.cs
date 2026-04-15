@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// Specifies which dimension to use for width.
 /// </summary>
-public readonly record struct TensorWidthDimension(TensorDimensionSelection Dimension) : ILoggable<TensorWidthDimension>
+public readonly record struct TensorWidthDimension(Datatypes.TensorDimensionSelection Dimension) : ILoggable<TensorWidthDimension>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.TensorWidthDimension");
 
     public static IArrowArray ToArrow(ReadOnlySpan<TensorWidthDimension> data)
     {
-        var inner = new TensorDimensionSelection[data.Length];
+        var inner = new Datatypes.TensorDimensionSelection[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Dimension;
-        return TensorDimensionSelection.ToArrow(inner);
+        return Datatypes.TensorDimensionSelection.ToArrow(inner);
     }
 }

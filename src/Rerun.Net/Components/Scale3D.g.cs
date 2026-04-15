@@ -14,15 +14,15 @@ namespace Rerun.Net.Components;
 /// A scale of 2.0 means doubling the size.
 /// Each component scales along the corresponding axis.
 /// </summary>
-public readonly record struct Scale3D(Vec3D Scale) : ILoggable<Scale3D>
+public readonly record struct Scale3D(Datatypes.Vec3D Scale) : ILoggable<Scale3D>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.Scale3D");
 
     public static IArrowArray ToArrow(ReadOnlySpan<Scale3D> data)
     {
-        var inner = new Vec3D[data.Length];
+        var inner = new Datatypes.Vec3D[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Scale;
-        return Vec3D.ToArrow(inner);
+        return Datatypes.Vec3D.ToArrow(inner);
     }
 }

@@ -10,15 +10,15 @@ using Rerun.Net.Components;
 
 namespace Rerun.Net.Blueprint.Components;
 
-public readonly record struct ComponentColumnSelector(Datatypes.ComponentColumnSelector Selector) : ILoggable<ComponentColumnSelector>
+public readonly record struct ComponentColumnSelector(global::Rerun.Net.Blueprint.Datatypes.ComponentColumnSelector Selector) : ILoggable<ComponentColumnSelector>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.ComponentColumnSelector");
 
     public static IArrowArray ToArrow(ReadOnlySpan<ComponentColumnSelector> data)
     {
-        var inner = new Datatypes.ComponentColumnSelector[data.Length];
+        var inner = new global::Rerun.Net.Blueprint.Datatypes.ComponentColumnSelector[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Selector;
-        return Datatypes.ComponentColumnSelector.ToArrow(inner);
+        return global::Rerun.Net.Blueprint.Datatypes.ComponentColumnSelector.ToArrow(inner);
     }
 }

@@ -57,14 +57,14 @@ public sealed partial class ViewContents : IAsComponents
 
     public ViewContents() { }
 
-    public ViewContents WithQuery(ReadOnlySpan<Components.QueryExpression> query)
+    public ViewContents WithQuery(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.QueryExpression> query)
     {
         Query = ComponentBatch.FromLoggable(query,
             new ComponentDescriptor(ArchetypeName, "ViewContents:query", "rerun.blueprint.components.QueryExpression"));
         return this;
     }
 
-    public ViewContents WithQuery(params Components.QueryExpression[] query) => WithQuery(query.AsSpan());
+    public ViewContents WithQuery(params global::Rerun.Net.Blueprint.Components.QueryExpression[] query) => WithQuery(query.AsSpan());
 
     /// <summary>Create an empty ViewContents for partial updates. Use With*() to set fields.</summary>
     public static ViewContents UpdateFields() => new();

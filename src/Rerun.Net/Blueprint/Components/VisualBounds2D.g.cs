@@ -13,15 +13,15 @@ namespace Rerun.Net.Blueprint.Components;
 /// <summary>
 /// Visual bounds in 2D space used for `Spatial2DView`.
 /// </summary>
-public readonly record struct VisualBounds2D(Range2D Range2d) : ILoggable<VisualBounds2D>
+public readonly record struct VisualBounds2D(global::Rerun.Net.Datatypes.Range2D Range2d) : ILoggable<VisualBounds2D>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.VisualBounds2D");
 
     public static IArrowArray ToArrow(ReadOnlySpan<VisualBounds2D> data)
     {
-        var inner = new Range2D[data.Length];
+        var inner = new global::Rerun.Net.Datatypes.Range2D[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Range2d;
-        return Range2D.ToArrow(inner);
+        return global::Rerun.Net.Datatypes.Range2D.ToArrow(inner);
     }
 }

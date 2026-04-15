@@ -25,13 +25,13 @@ public sealed partial class ActiveVisualizers : IAsComponents
 
     public ComponentBatch InstructionIds { get; private set; }
 
-    public ActiveVisualizers(ReadOnlySpan<Components.VisualizerInstructionId> instruction_ids)
+    public ActiveVisualizers(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.VisualizerInstructionId> instruction_ids)
     {
         InstructionIds = ComponentBatch.FromLoggable(instruction_ids,
             new ComponentDescriptor(ArchetypeName, "ActiveVisualizers:instruction_ids", "rerun.blueprint.components.VisualizerInstructionId"));
     }
 
-    public ActiveVisualizers(params Components.VisualizerInstructionId[] instruction_ids) : this(instruction_ids.AsSpan()) { }
+    public ActiveVisualizers(params global::Rerun.Net.Blueprint.Components.VisualizerInstructionId[] instruction_ids) : this(instruction_ids.AsSpan()) { }
 
     /// <summary>Create an empty ActiveVisualizers for partial updates. Use With*() to set fields.</summary>
     public static ActiveVisualizers UpdateFields() => new();

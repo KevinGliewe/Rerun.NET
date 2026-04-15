@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// A display name, typically for an entity or a item like a plot series.
 /// </summary>
-public readonly record struct Name(Utf8 Value) : ILoggable<Name>
+public readonly record struct Name(Datatypes.Utf8 Value) : ILoggable<Name>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.Name");
 
     public static IArrowArray ToArrow(ReadOnlySpan<Name> data)
     {
-        var inner = new Utf8[data.Length];
+        var inner = new Datatypes.Utf8[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Value;
-        return Utf8.ToArrow(inner);
+        return Datatypes.Utf8.ToArrow(inner);
     }
 }

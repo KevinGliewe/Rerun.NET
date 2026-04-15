@@ -13,15 +13,15 @@ namespace Rerun.Net.Components;
 /// The complete reference of officially registered media types is maintained by the IANA and can be
 /// consulted at <https://www.iana.org/assignments/media-types/media-types.xhtml>.
 /// </summary>
-public readonly record struct MediaType(Utf8 Value) : ILoggable<MediaType>
+public readonly record struct MediaType(Datatypes.Utf8 Value) : ILoggable<MediaType>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.MediaType");
 
     public static IArrowArray ToArrow(ReadOnlySpan<MediaType> data)
     {
-        var inner = new Utf8[data.Length];
+        var inner = new Datatypes.Utf8[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Value;
-        return Utf8.ToArrow(inner);
+        return Datatypes.Utf8.ToArrow(inner);
     }
 }

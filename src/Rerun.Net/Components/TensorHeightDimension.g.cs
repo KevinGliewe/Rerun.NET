@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// Specifies which dimension to use for height.
 /// </summary>
-public readonly record struct TensorHeightDimension(TensorDimensionSelection Dimension) : ILoggable<TensorHeightDimension>
+public readonly record struct TensorHeightDimension(Datatypes.TensorDimensionSelection Dimension) : ILoggable<TensorHeightDimension>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.TensorHeightDimension");
 
     public static IArrowArray ToArrow(ReadOnlySpan<TensorHeightDimension> data)
     {
-        var inner = new TensorDimensionSelection[data.Length];
+        var inner = new Datatypes.TensorDimensionSelection[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Dimension;
-        return TensorDimensionSelection.ToArrow(inner);
+        return Datatypes.TensorDimensionSelection.ToArrow(inner);
     }
 }
