@@ -22,15 +22,15 @@ namespace Rerun.Net.Blueprint.Components;
 /// (`/world/**` matches both `/world` and `/world/car/driver`).
 /// Other uses of `*` are not (yet) supported.
 /// </summary>
-public readonly record struct QueryExpression(Utf8 Filter) : ILoggable<QueryExpression>
+public readonly record struct QueryExpression(global::Rerun.Net.Datatypes.Utf8 Filter) : ILoggable<QueryExpression>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.QueryExpression");
 
     public static IArrowArray ToArrow(ReadOnlySpan<QueryExpression> data)
     {
-        var inner = new Utf8[data.Length];
+        var inner = new global::Rerun.Net.Datatypes.Utf8[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Filter;
-        return Utf8.ToArrow(inner);
+        return global::Rerun.Net.Datatypes.Utf8.ToArrow(inner);
     }
 }

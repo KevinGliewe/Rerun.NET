@@ -13,15 +13,15 @@ namespace Rerun.Net.Blueprint.Components;
 /// <summary>
 /// The class identifier of view, e.g. `"2D"`, `"TextLog"`, ….
 /// </summary>
-public readonly record struct ViewClass(Utf8 Value) : ILoggable<ViewClass>
+public readonly record struct ViewClass(global::Rerun.Net.Datatypes.Utf8 Value) : ILoggable<ViewClass>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.ViewClass");
 
     public static IArrowArray ToArrow(ReadOnlySpan<ViewClass> data)
     {
-        var inner = new Utf8[data.Length];
+        var inner = new global::Rerun.Net.Datatypes.Utf8[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Value;
-        return Utf8.ToArrow(inner);
+        return global::Rerun.Net.Datatypes.Utf8.ToArrow(inner);
     }
 }

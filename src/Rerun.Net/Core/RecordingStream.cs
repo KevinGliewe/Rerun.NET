@@ -160,7 +160,7 @@ public sealed class RecordingStream : IDisposable
                     : default;
                 var error = new RrError();
                 NativeMethods.RrRecordingStreamServeGrpc(
-                    _handle, rrBindIp, port, rrMemLimit, newestFirst, null, 0, ref error);
+                    _handle, rrBindIp, port, rrMemLimit, newestFirst, ref error);
                 RerunException.ThrowIfError(error);
             }
         }

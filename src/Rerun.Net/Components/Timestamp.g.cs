@@ -12,15 +12,15 @@ namespace Rerun.Net.Components;
 /// 
 /// Should be an absolute time, i.e. relative to Unix Epoch.
 /// </summary>
-public readonly record struct Timestamp(TimeInt TimestampValue) : ILoggable<Timestamp>
+public readonly record struct Timestamp(Datatypes.TimeInt TimestampValue) : ILoggable<Timestamp>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.Timestamp");
 
     public static IArrowArray ToArrow(ReadOnlySpan<Timestamp> data)
     {
-        var inner = new TimeInt[data.Length];
+        var inner = new Datatypes.TimeInt[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].TimestampValue;
-        return TimeInt.ToArrow(inner);
+        return Datatypes.TimeInt.ToArrow(inner);
     }
 }

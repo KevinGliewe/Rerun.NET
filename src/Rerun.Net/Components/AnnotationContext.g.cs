@@ -16,14 +16,14 @@ namespace Rerun.Net.Components;
 /// path-hierarchy when searching up through the ancestors of a given entity
 /// path.
 /// </summary>
-public readonly record struct AnnotationContext(ClassDescriptionMapElem[] ClassMap) : ILoggable<AnnotationContext>
+public readonly record struct AnnotationContext(Datatypes.ClassDescriptionMapElem[] ClassMap) : ILoggable<AnnotationContext>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.AnnotationContext");
 
     public static IArrowArray ToArrow(ReadOnlySpan<AnnotationContext> data)
     {
         // Flatten all inner arrays and build offsets for ListArray
-        var allItems = new System.Collections.Generic.List<ClassDescriptionMapElem>();
+        var allItems = new System.Collections.Generic.List<Datatypes.ClassDescriptionMapElem>();
         var offsets = new Int32Array.Builder();
         offsets.Append(0);
         foreach (var v in data)
@@ -32,7 +32,7 @@ public readonly record struct AnnotationContext(ClassDescriptionMapElem[] ClassM
                 allItems.Add(item);
             offsets.Append(allItems.Count);
         }
-        var valuesArray = ClassDescriptionMapElem.ToArrow(allItems.ToArray());
+        var valuesArray = Datatypes.ClassDescriptionMapElem.ToArrow(allItems.ToArray());
         var offsetsArray = offsets.Build();
         var listType = new Apache.Arrow.Types.ListType(
             new Apache.Arrow.Field("item", valuesArray.Data.DataType, false));

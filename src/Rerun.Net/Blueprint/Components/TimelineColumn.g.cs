@@ -13,15 +13,15 @@ namespace Rerun.Net.Blueprint.Components;
 /// <summary>
 /// A timeline column in a text log table.
 /// </summary>
-public readonly record struct TimelineColumn(Datatypes.TimelineColumn TimelineColumnValue) : ILoggable<TimelineColumn>
+public readonly record struct TimelineColumn(global::Rerun.Net.Blueprint.Datatypes.TimelineColumn TimelineColumnValue) : ILoggable<TimelineColumn>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.TimelineColumn");
 
     public static IArrowArray ToArrow(ReadOnlySpan<TimelineColumn> data)
     {
-        var inner = new Datatypes.TimelineColumn[data.Length];
+        var inner = new global::Rerun.Net.Blueprint.Datatypes.TimelineColumn[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].TimelineColumnValue;
-        return Datatypes.TimelineColumn.ToArrow(inner);
+        return global::Rerun.Net.Blueprint.Datatypes.TimelineColumn.ToArrow(inner);
     }
 }

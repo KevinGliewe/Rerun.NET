@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// The three indices of a triangle in a triangle mesh.
 /// </summary>
-public readonly record struct TriangleIndices(UVec3D Indices) : ILoggable<TriangleIndices>
+public readonly record struct TriangleIndices(Datatypes.UVec3D Indices) : ILoggable<TriangleIndices>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.TriangleIndices");
 
     public static IArrowArray ToArrow(ReadOnlySpan<TriangleIndices> data)
     {
-        var inner = new UVec3D[data.Length];
+        var inner = new Datatypes.UVec3D[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Indices;
-        return UVec3D.ToArrow(inner);
+        return Datatypes.UVec3D.ToArrow(inner);
     }
 }

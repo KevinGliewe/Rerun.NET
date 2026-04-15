@@ -20,14 +20,14 @@ public sealed partial class TextLogFormat : IAsComponents
 
     public TextLogFormat() { }
 
-    public TextLogFormat WithMonospaceBody(ReadOnlySpan<Components.Enabled> monospace_body)
+    public TextLogFormat WithMonospaceBody(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.Enabled> monospace_body)
     {
         MonospaceBody = ComponentBatch.FromLoggable(monospace_body,
             new ComponentDescriptor(ArchetypeName, "TextLogFormat:monospace_body", "rerun.blueprint.components.Enabled"));
         return this;
     }
 
-    public TextLogFormat WithMonospaceBody(params Components.Enabled[] monospace_body) => WithMonospaceBody(monospace_body.AsSpan());
+    public TextLogFormat WithMonospaceBody(params global::Rerun.Net.Blueprint.Components.Enabled[] monospace_body) => WithMonospaceBody(monospace_body.AsSpan());
 
     /// <summary>Create an empty TextLogFormat for partial updates. Use With*() to set fields.</summary>
     public static TextLogFormat UpdateFields() => new();

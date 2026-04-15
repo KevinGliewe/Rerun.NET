@@ -147,11 +147,12 @@ internal class ComponentEmitter : EmitterBase
         return sb.ToString();
     }
 
-    /// <summary>Qualify datatype references to avoid name collisions with component names.</summary>
+    /// <summary>Qualify datatype references with the <c>Datatypes.</c> prefix so the
+    /// blueprint namespace rewrite in Program.cs can unambiguously fully-qualify them.</summary>
     private static string QualifyDatatypeRef(FbsReference r, string componentName)
     {
         var shortName = GetShortName(r.FullyQualifiedName);
-        if (shortName == componentName && r.FullyQualifiedName.Contains("datatypes"))
+        if (r.FullyQualifiedName.Contains("datatypes"))
             return $"Datatypes.{shortName}";
         return shortName;
     }

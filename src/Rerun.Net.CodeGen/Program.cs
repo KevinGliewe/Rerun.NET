@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Rerun.Net.CodeGen;
 using Rerun.Net.CodeGen.Emitters;
 
@@ -44,7 +45,7 @@ foreach (var dir in fbsDirs)
     }
 }
 
-var datatypeEmitter = new DatatypeEmitter();
+var datatypeEmitter = new DatatypeEmitter(registry);
 var componentEmitter = new ComponentEmitter();
 var archetypeEmitter = new ArchetypeEmitter();
 
@@ -138,6 +139,43 @@ foreach (var type in registry.GetByNamespace("rerun.archetypes").OfType<FbsTable
     }
 }
 
+// Sets of all known type short-names per category, used by the blueprint
+// post-processor to fully-qualify cross-namespace references.
+var coreDatatypeNames = registry.GetByNamespace("rerun.datatypes")
+    .Select(t => t.Name).ToHashSet();
+var coreComponentNames = registry.GetByNamespace("rerun.components")
+    .Select(t => t.Name).ToHashSet();
+var bpDatatypeNames = registry.GetByNamespace("rerun.blueprint.datatypes")
+    .Select(t => t.Name).ToHashSet();
+var bpComponentNames = registry.GetByNamespace("rerun.blueprint.components")
+    .Select(t => t.Name).ToHashSet();
+
+// Inside Rerun.Net.Blueprint.* the unqualified names "Datatypes" and "Components"
+// resolve to the closer Rerun.Net.Blueprint.{Datatypes,Components} sibling, which
+// shadows the matching core namespaces. Rewrite every "Datatypes.X" / "Components.X"
+// reference to a fully-qualified global:: path so the resolution is unambiguous.
+var qualifiedRefRegex = new Regex(@"\b(Datatypes|Components)\.([A-Z]\w*)");
+string FullyQualifyBlueprintRefs(string code) => qualifiedRefRegex.Replace(code, m =>
+{
+    var category = m.Groups[1].Value;
+    var name = m.Groups[2].Value;
+    if (category == "Datatypes")
+    {
+        if (bpDatatypeNames.Contains(name))
+            return $"global::Rerun.Net.Blueprint.Datatypes.{name}";
+        if (coreDatatypeNames.Contains(name))
+            return $"global::Rerun.Net.Datatypes.{name}";
+    }
+    else
+    {
+        if (bpComponentNames.Contains(name))
+            return $"global::Rerun.Net.Blueprint.Components.{name}";
+        if (coreComponentNames.Contains(name))
+            return $"global::Rerun.Net.Components.{name}";
+    }
+    return m.Value;
+});
+
 // Generate blueprint types — same emitters, different namespace mapping
 var bpNamespaces = new[] {
     ("rerun.blueprint.datatypes", "Blueprint/Datatypes", datatypeEmitter),
@@ -171,6 +209,10 @@ for (var idx = 0; idx < bpNamespaces.Length; idx++)
                            "using Rerun.Net.Datatypes;\nusing Rerun.Net.Components;\n\nnamespace Rerun.Net.Blueprint.Components;")
                        .Replace("namespace Rerun.Net.Archetypes;",
                            "using Rerun.Net.Components;\nusing Rerun.Net.Blueprint.Components;\n\nnamespace Rerun.Net.Blueprint.Archetypes;");
+
+            // Fully-qualify cross-namespace type references so blueprint sibling
+            // namespaces don't shadow the core ones.
+            code = FullyQualifyBlueprintRefs(code);
 
             var outFile = Path.Combine(outputPath, subDir, $"{type.Name}.g.cs");
             Directory.CreateDirectory(Path.GetDirectoryName(outFile)!);

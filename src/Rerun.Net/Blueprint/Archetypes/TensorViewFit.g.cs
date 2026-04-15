@@ -20,14 +20,14 @@ public sealed partial class TensorViewFit : IAsComponents
 
     public TensorViewFit() { }
 
-    public TensorViewFit WithScaling(ReadOnlySpan<Components.ViewFit> scaling)
+    public TensorViewFit WithScaling(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.ViewFit> scaling)
     {
         Scaling = ComponentBatch.FromLoggable(scaling,
             new ComponentDescriptor(ArchetypeName, "TensorViewFit:scaling", "rerun.blueprint.components.ViewFit"));
         return this;
     }
 
-    public TensorViewFit WithScaling(params Components.ViewFit[] scaling) => WithScaling(scaling.AsSpan());
+    public TensorViewFit WithScaling(params global::Rerun.Net.Blueprint.Components.ViewFit[] scaling) => WithScaling(scaling.AsSpan());
 
     /// <summary>Create an empty TensorViewFit for partial updates. Use With*() to set fields.</summary>
     public static TensorViewFit UpdateFields() => new();

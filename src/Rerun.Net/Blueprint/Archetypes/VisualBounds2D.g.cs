@@ -24,13 +24,13 @@ public sealed partial class VisualBounds2D : IAsComponents
 
     public ComponentBatch Range { get; private set; }
 
-    public VisualBounds2D(ReadOnlySpan<Components.VisualBounds2D> range)
+    public VisualBounds2D(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.VisualBounds2D> range)
     {
         Range = ComponentBatch.FromLoggable(range,
             new ComponentDescriptor(ArchetypeName, "VisualBounds2D:range", "rerun.blueprint.components.VisualBounds2D"));
     }
 
-    public VisualBounds2D(params Components.VisualBounds2D[] range) : this(range.AsSpan()) { }
+    public VisualBounds2D(params global::Rerun.Net.Blueprint.Components.VisualBounds2D[] range) : this(range.AsSpan()) { }
 
     /// <summary>Create an empty VisualBounds2D for partial updates. Use With*() to set fields.</summary>
     public static VisualBounds2D UpdateFields() => new();

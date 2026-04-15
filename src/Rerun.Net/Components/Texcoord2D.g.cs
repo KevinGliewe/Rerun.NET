@@ -26,15 +26,15 @@ namespace Rerun.Net.Components;
 /// This is the same convention as in Vulkan/Metal/DX12/WebGPU, but (!) unlike OpenGL,
 /// which places the origin at the bottom-left.
 /// </summary>
-public readonly record struct Texcoord2D(Vec2D Uv) : ILoggable<Texcoord2D>
+public readonly record struct Texcoord2D(Datatypes.Vec2D Uv) : ILoggable<Texcoord2D>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.Texcoord2D");
 
     public static IArrowArray ToArrow(ReadOnlySpan<Texcoord2D> data)
     {
-        var inner = new Vec2D[data.Length];
+        var inner = new Datatypes.Vec2D[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Uv;
-        return Vec2D.ToArrow(inner);
+        return Datatypes.Vec2D.ToArrow(inner);
     }
 }

@@ -24,50 +24,50 @@ public sealed partial class ViewportBlueprint : IAsComponents
 
     public ViewportBlueprint() { }
 
-    public ViewportBlueprint WithRootContainer(ReadOnlySpan<Components.RootContainer> root_container)
+    public ViewportBlueprint WithRootContainer(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.RootContainer> root_container)
     {
         RootContainer = ComponentBatch.FromLoggable(root_container,
             new ComponentDescriptor(ArchetypeName, "ViewportBlueprint:root_container", "rerun.blueprint.components.RootContainer"));
         return this;
     }
 
-    public ViewportBlueprint WithRootContainer(params Components.RootContainer[] root_container) => WithRootContainer(root_container.AsSpan());
+    public ViewportBlueprint WithRootContainer(params global::Rerun.Net.Blueprint.Components.RootContainer[] root_container) => WithRootContainer(root_container.AsSpan());
 
-    public ViewportBlueprint WithMaximized(ReadOnlySpan<Components.ViewMaximized> maximized)
+    public ViewportBlueprint WithMaximized(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.ViewMaximized> maximized)
     {
         Maximized = ComponentBatch.FromLoggable(maximized,
             new ComponentDescriptor(ArchetypeName, "ViewportBlueprint:maximized", "rerun.blueprint.components.ViewMaximized"));
         return this;
     }
 
-    public ViewportBlueprint WithMaximized(params Components.ViewMaximized[] maximized) => WithMaximized(maximized.AsSpan());
+    public ViewportBlueprint WithMaximized(params global::Rerun.Net.Blueprint.Components.ViewMaximized[] maximized) => WithMaximized(maximized.AsSpan());
 
-    public ViewportBlueprint WithAutoLayout(ReadOnlySpan<Components.AutoLayout> auto_layout)
+    public ViewportBlueprint WithAutoLayout(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.AutoLayout> auto_layout)
     {
         AutoLayout = ComponentBatch.FromLoggable(auto_layout,
             new ComponentDescriptor(ArchetypeName, "ViewportBlueprint:auto_layout", "rerun.blueprint.components.AutoLayout"));
         return this;
     }
 
-    public ViewportBlueprint WithAutoLayout(params Components.AutoLayout[] auto_layout) => WithAutoLayout(auto_layout.AsSpan());
+    public ViewportBlueprint WithAutoLayout(params global::Rerun.Net.Blueprint.Components.AutoLayout[] auto_layout) => WithAutoLayout(auto_layout.AsSpan());
 
-    public ViewportBlueprint WithAutoViews(ReadOnlySpan<Components.AutoViews> auto_views)
+    public ViewportBlueprint WithAutoViews(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.AutoViews> auto_views)
     {
         AutoViews = ComponentBatch.FromLoggable(auto_views,
             new ComponentDescriptor(ArchetypeName, "ViewportBlueprint:auto_views", "rerun.blueprint.components.AutoViews"));
         return this;
     }
 
-    public ViewportBlueprint WithAutoViews(params Components.AutoViews[] auto_views) => WithAutoViews(auto_views.AsSpan());
+    public ViewportBlueprint WithAutoViews(params global::Rerun.Net.Blueprint.Components.AutoViews[] auto_views) => WithAutoViews(auto_views.AsSpan());
 
-    public ViewportBlueprint WithPastViewerRecommendations(ReadOnlySpan<Components.ViewerRecommendationHash> past_viewer_recommendations)
+    public ViewportBlueprint WithPastViewerRecommendations(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.ViewerRecommendationHash> past_viewer_recommendations)
     {
         PastViewerRecommendations = ComponentBatch.FromLoggable(past_viewer_recommendations,
             new ComponentDescriptor(ArchetypeName, "ViewportBlueprint:past_viewer_recommendations", "rerun.blueprint.components.ViewerRecommendationHash"));
         return this;
     }
 
-    public ViewportBlueprint WithPastViewerRecommendations(params Components.ViewerRecommendationHash[] past_viewer_recommendations) => WithPastViewerRecommendations(past_viewer_recommendations.AsSpan());
+    public ViewportBlueprint WithPastViewerRecommendations(params global::Rerun.Net.Blueprint.Components.ViewerRecommendationHash[] past_viewer_recommendations) => WithPastViewerRecommendations(past_viewer_recommendations.AsSpan());
 
     /// <summary>Create an empty ViewportBlueprint for partial updates. Use With*() to set fields.</summary>
     public static ViewportBlueprint UpdateFields() => new();

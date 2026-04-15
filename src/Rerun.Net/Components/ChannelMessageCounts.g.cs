@@ -12,14 +12,14 @@ namespace Rerun.Net.Components;
 /// 
 /// Used in MCAP statistics to track how many messages were recorded per channel.
 /// </summary>
-public readonly record struct ChannelMessageCounts(ChannelCountPair[] Counts) : ILoggable<ChannelMessageCounts>
+public readonly record struct ChannelMessageCounts(Datatypes.ChannelCountPair[] Counts) : ILoggable<ChannelMessageCounts>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.ChannelMessageCounts");
 
     public static IArrowArray ToArrow(ReadOnlySpan<ChannelMessageCounts> data)
     {
         // Flatten all inner arrays and build offsets for ListArray
-        var allItems = new System.Collections.Generic.List<ChannelCountPair>();
+        var allItems = new System.Collections.Generic.List<Datatypes.ChannelCountPair>();
         var offsets = new Int32Array.Builder();
         offsets.Append(0);
         foreach (var v in data)
@@ -28,7 +28,7 @@ public readonly record struct ChannelMessageCounts(ChannelCountPair[] Counts) : 
                 allItems.Add(item);
             offsets.Append(allItems.Count);
         }
-        var valuesArray = ChannelCountPair.ToArrow(allItems.ToArray());
+        var valuesArray = Datatypes.ChannelCountPair.ToArrow(allItems.ToArray());
         var offsetsArray = offsets.Build();
         var listType = new Apache.Arrow.Types.ListType(
             new Apache.Arrow.Field("item", valuesArray.Data.DataType, false));

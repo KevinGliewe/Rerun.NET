@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// A string-based ID representing a node in a graph.
 /// </summary>
-public readonly record struct GraphNode(Utf8 Id) : ILoggable<GraphNode>
+public readonly record struct GraphNode(Datatypes.Utf8 Id) : ILoggable<GraphNode>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.GraphNode");
 
     public static IArrowArray ToArrow(ReadOnlySpan<GraphNode> data)
     {
-        var inner = new Utf8[data.Length];
+        var inner = new Datatypes.Utf8[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Id;
-        return Utf8.ToArrow(inner);
+        return Datatypes.Utf8.ToArrow(inner);
     }
 }

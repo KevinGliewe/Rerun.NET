@@ -20,14 +20,14 @@ public sealed partial class MapBackground : IAsComponents
 
     public MapBackground() { }
 
-    public MapBackground WithProvider(ReadOnlySpan<Components.MapProvider> provider)
+    public MapBackground WithProvider(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.MapProvider> provider)
     {
         Provider = ComponentBatch.FromLoggable(provider,
             new ComponentDescriptor(ArchetypeName, "MapBackground:provider", "rerun.blueprint.components.MapProvider"));
         return this;
     }
 
-    public MapBackground WithProvider(params Components.MapProvider[] provider) => WithProvider(provider.AsSpan());
+    public MapBackground WithProvider(params global::Rerun.Net.Blueprint.Components.MapProvider[] provider) => WithProvider(provider.AsSpan());
 
     /// <summary>Create an empty MapBackground for partial updates. Use With*() to set fields.</summary>
     public static MapBackground UpdateFields() => new();

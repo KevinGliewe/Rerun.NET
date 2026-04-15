@@ -10,14 +10,14 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// A geospatial line string expressed in [EPSG:4326](https://epsg.io/4326) latitude and longitude (North/East-positive degrees).
 /// </summary>
-public readonly record struct GeoLineString(DVec2D[] LatLon) : ILoggable<GeoLineString>
+public readonly record struct GeoLineString(Datatypes.DVec2D[] LatLon) : ILoggable<GeoLineString>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.GeoLineString");
 
     public static IArrowArray ToArrow(ReadOnlySpan<GeoLineString> data)
     {
         // Flatten all inner arrays and build offsets for ListArray
-        var allItems = new System.Collections.Generic.List<DVec2D>();
+        var allItems = new System.Collections.Generic.List<Datatypes.DVec2D>();
         var offsets = new Int32Array.Builder();
         offsets.Append(0);
         foreach (var v in data)
@@ -26,7 +26,7 @@ public readonly record struct GeoLineString(DVec2D[] LatLon) : ILoggable<GeoLine
                 allItems.Add(item);
             offsets.Append(allItems.Count);
         }
-        var valuesArray = DVec2D.ToArrow(allItems.ToArray());
+        var valuesArray = Datatypes.DVec2D.ToArrow(allItems.ToArray());
         var offsetsArray = offsets.Build();
         var listType = new Apache.Arrow.Types.ListType(
             new Apache.Arrow.Field("item", valuesArray.Data.DataType, false));

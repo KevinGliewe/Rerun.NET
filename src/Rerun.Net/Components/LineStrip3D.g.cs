@@ -21,14 +21,14 @@ namespace Rerun.Net.Components;
 /// 4
 /// ```
 /// </summary>
-public readonly record struct LineStrip3D(Vec3D[] Points) : ILoggable<LineStrip3D>
+public readonly record struct LineStrip3D(Datatypes.Vec3D[] Points) : ILoggable<LineStrip3D>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.LineStrip3D");
 
     public static IArrowArray ToArrow(ReadOnlySpan<LineStrip3D> data)
     {
         // Flatten all inner arrays and build offsets for ListArray
-        var allItems = new System.Collections.Generic.List<Vec3D>();
+        var allItems = new System.Collections.Generic.List<Datatypes.Vec3D>();
         var offsets = new Int32Array.Builder();
         offsets.Append(0);
         foreach (var v in data)
@@ -37,7 +37,7 @@ public readonly record struct LineStrip3D(Vec3D[] Points) : ILoggable<LineStrip3
                 allItems.Add(item);
             offsets.Append(allItems.Count);
         }
-        var valuesArray = Vec3D.ToArrow(allItems.ToArray());
+        var valuesArray = Datatypes.Vec3D.ToArrow(allItems.ToArray());
         var offsetsArray = offsets.Build();
         var listType = new Apache.Arrow.Types.ListType(
             new Apache.Arrow.Field("item", valuesArray.Data.DataType, false));

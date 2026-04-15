@@ -23,15 +23,15 @@ namespace Rerun.Net.Components;
 /// ```
 /// 
 /// </summary>
-public readonly record struct TransformMat3x3(Mat3x3 Matrix) : ILoggable<TransformMat3x3>
+public readonly record struct TransformMat3x3(Datatypes.Mat3x3 Matrix) : ILoggable<TransformMat3x3>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.TransformMat3x3");
 
     public static IArrowArray ToArrow(ReadOnlySpan<TransformMat3x3> data)
     {
-        var inner = new Mat3x3[data.Length];
+        var inner = new Datatypes.Mat3x3[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Matrix;
-        return Mat3x3.ToArrow(inner);
+        return Datatypes.Mat3x3.ToArrow(inner);
     }
 }

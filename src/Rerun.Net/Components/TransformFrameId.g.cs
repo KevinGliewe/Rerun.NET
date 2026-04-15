@@ -18,15 +18,15 @@ namespace Rerun.Net.Components;
 /// describes a relationship between these parent and child transform frames, **not** the transform frame
 /// that the entity path may be using (defined by an [archetypes.CoordinateFrame]).
 /// </summary>
-public readonly record struct TransformFrameId(Utf8 Value) : ILoggable<TransformFrameId>
+public readonly record struct TransformFrameId(Datatypes.Utf8 Value) : ILoggable<TransformFrameId>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.TransformFrameId");
 
     public static IArrowArray ToArrow(ReadOnlySpan<TransformFrameId> data)
     {
-        var inner = new Utf8[data.Length];
+        var inner = new Datatypes.Utf8[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Value;
-        return Utf8.ToArrow(inner);
+        return Datatypes.Utf8.ToArrow(inner);
     }
 }

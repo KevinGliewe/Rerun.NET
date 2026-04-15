@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// A color multiplier, usually applied to a whole entity, e.g. a mesh.
 /// </summary>
-public readonly record struct AlbedoFactor(Rgba32 AlbedoFactorValue) : ILoggable<AlbedoFactor>
+public readonly record struct AlbedoFactor(Datatypes.Rgba32 AlbedoFactorValue) : ILoggable<AlbedoFactor>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.AlbedoFactor");
 
     public static IArrowArray ToArrow(ReadOnlySpan<AlbedoFactor> data)
     {
-        var inner = new Rgba32[data.Length];
+        var inner = new Datatypes.Rgba32[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].AlbedoFactorValue;
-        return Rgba32.ToArrow(inner);
+        return Datatypes.Rgba32.ToArrow(inner);
     }
 }

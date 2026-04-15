@@ -20,14 +20,14 @@ public sealed partial class PanelBlueprint : IAsComponents
 
     public PanelBlueprint() { }
 
-    public PanelBlueprint WithState(ReadOnlySpan<Components.PanelState> state)
+    public PanelBlueprint WithState(ReadOnlySpan<global::Rerun.Net.Blueprint.Components.PanelState> state)
     {
         State = ComponentBatch.FromLoggable(state,
             new ComponentDescriptor(ArchetypeName, "PanelBlueprint:state", "rerun.blueprint.components.PanelState"));
         return this;
     }
 
-    public PanelBlueprint WithState(params Components.PanelState[] state) => WithState(state.AsSpan());
+    public PanelBlueprint WithState(params global::Rerun.Net.Blueprint.Components.PanelState[] state) => WithState(state.AsSpan());
 
     /// <summary>Create an empty PanelBlueprint for partial updates. Use With*() to set fields.</summary>
     public static PanelBlueprint UpdateFields() => new();

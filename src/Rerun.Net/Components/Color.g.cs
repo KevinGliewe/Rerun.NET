@@ -14,15 +14,15 @@ namespace Rerun.Net.Components;
 /// byte is `R` and the least significant byte is `A`.
 /// 
 /// </summary>
-public readonly record struct Color(Rgba32 Rgba) : ILoggable<Color>
+public readonly record struct Color(Datatypes.Rgba32 Rgba) : ILoggable<Color>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.Color");
 
     public static IArrowArray ToArrow(ReadOnlySpan<Color> data)
     {
-        var inner = new Rgba32[data.Length];
+        var inner = new Datatypes.Rgba32[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Rgba;
-        return Rgba32.ToArrow(inner);
+        return Datatypes.Rgba32.ToArrow(inner);
     }
 }

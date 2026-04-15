@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// A geospatial position expressed in [EPSG:4326](https://epsg.io/4326) latitude and longitude (North/East-positive degrees).
 /// </summary>
-public readonly record struct LatLon(DVec2D LatLonValue) : ILoggable<LatLon>
+public readonly record struct LatLon(Datatypes.DVec2D LatLonValue) : ILoggable<LatLon>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.LatLon");
 
     public static IArrowArray ToArrow(ReadOnlySpan<LatLon> data)
     {
-        var inner = new DVec2D[data.Length];
+        var inner = new Datatypes.DVec2D[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].LatLonValue;
-        return DVec2D.ToArrow(inner);
+        return Datatypes.DVec2D.ToArrow(inner);
     }
 }

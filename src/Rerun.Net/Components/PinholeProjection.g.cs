@@ -20,15 +20,15 @@ namespace Rerun.Net.Components;
 /// 0.0     0.0    1.0
 /// ```
 /// </summary>
-public readonly record struct PinholeProjection(Mat3x3 ImageFromCamera) : ILoggable<PinholeProjection>
+public readonly record struct PinholeProjection(Datatypes.Mat3x3 ImageFromCamera) : ILoggable<PinholeProjection>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.PinholeProjection");
 
     public static IArrowArray ToArrow(ReadOnlySpan<PinholeProjection> data)
     {
-        var inner = new Mat3x3[data.Length];
+        var inner = new Datatypes.Mat3x3[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].ImageFromCamera;
-        return Mat3x3.ToArrow(inner);
+        return Datatypes.Mat3x3.ToArrow(inner);
     }
 }

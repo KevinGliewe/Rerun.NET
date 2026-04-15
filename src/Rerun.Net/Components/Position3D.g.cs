@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// A position in 3D space.
 /// </summary>
-public readonly record struct Position3D(Vec3D Xyz) : ILoggable<Position3D>
+public readonly record struct Position3D(Datatypes.Vec3D Xyz) : ILoggable<Position3D>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.Position3D");
 
     public static IArrowArray ToArrow(ReadOnlySpan<Position3D> data)
     {
-        var inner = new Vec3D[data.Length];
+        var inner = new Datatypes.Vec3D[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Xyz;
-        return Vec3D.ToArrow(inner);
+        return Datatypes.Vec3D.ToArrow(inner);
     }
 }

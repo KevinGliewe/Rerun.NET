@@ -13,15 +13,15 @@ namespace Rerun.Net.Blueprint.Components;
 /// <summary>
 /// Whether a view is maximized.
 /// </summary>
-public readonly record struct ViewMaximized(Uuid ViewId) : ILoggable<ViewMaximized>
+public readonly record struct ViewMaximized(global::Rerun.Net.Datatypes.Uuid ViewId) : ILoggable<ViewMaximized>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.ViewMaximized");
 
     public static IArrowArray ToArrow(ReadOnlySpan<ViewMaximized> data)
     {
-        var inner = new Uuid[data.Length];
+        var inner = new global::Rerun.Net.Datatypes.Uuid[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].ViewId;
-        return Uuid.ToArrow(inner);
+        return global::Rerun.Net.Datatypes.Uuid.ToArrow(inner);
     }
 }

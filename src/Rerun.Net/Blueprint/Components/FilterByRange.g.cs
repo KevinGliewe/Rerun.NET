@@ -10,15 +10,15 @@ using Rerun.Net.Components;
 
 namespace Rerun.Net.Blueprint.Components;
 
-public readonly record struct FilterByRange(Datatypes.FilterByRange Range) : ILoggable<FilterByRange>
+public readonly record struct FilterByRange(global::Rerun.Net.Blueprint.Datatypes.FilterByRange Range) : ILoggable<FilterByRange>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.FilterByRange");
 
     public static IArrowArray ToArrow(ReadOnlySpan<FilterByRange> data)
     {
-        var inner = new Datatypes.FilterByRange[data.Length];
+        var inner = new global::Rerun.Net.Blueprint.Datatypes.FilterByRange[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Range;
-        return Datatypes.FilterByRange.ToArrow(inner);
+        return global::Rerun.Net.Blueprint.Datatypes.FilterByRange.ToArrow(inner);
     }
 }

@@ -16,15 +16,15 @@ namespace Rerun.Net.Blueprint.Components;
 /// IDs are only guaranteed to be unique in the scope of a view.
 /// For details see [archetypes.ActiveVisualizers].
 /// </summary>
-public readonly record struct VisualizerInstructionId(Uuid Visualizer) : ILoggable<VisualizerInstructionId>
+public readonly record struct VisualizerInstructionId(global::Rerun.Net.Datatypes.Uuid Visualizer) : ILoggable<VisualizerInstructionId>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.VisualizerInstructionId");
 
     public static IArrowArray ToArrow(ReadOnlySpan<VisualizerInstructionId> data)
     {
-        var inner = new Uuid[data.Length];
+        var inner = new global::Rerun.Net.Datatypes.Uuid[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Visualizer;
-        return Uuid.ToArrow(inner);
+        return global::Rerun.Net.Datatypes.Uuid.ToArrow(inner);
     }
 }

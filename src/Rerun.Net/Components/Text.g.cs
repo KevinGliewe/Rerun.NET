@@ -10,15 +10,15 @@ namespace Rerun.Net.Components;
 /// <summary>
 /// A string of text, e.g. for labels and text documents.
 /// </summary>
-public readonly record struct Text(Utf8 Value) : ILoggable<Text>
+public readonly record struct Text(Datatypes.Utf8 Value) : ILoggable<Text>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.components.Text");
 
     public static IArrowArray ToArrow(ReadOnlySpan<Text> data)
     {
-        var inner = new Utf8[data.Length];
+        var inner = new Datatypes.Utf8[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].Value;
-        return Utf8.ToArrow(inner);
+        return Datatypes.Utf8.ToArrow(inner);
     }
 }

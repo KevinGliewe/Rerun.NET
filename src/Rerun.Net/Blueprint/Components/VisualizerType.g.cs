@@ -13,15 +13,15 @@ namespace Rerun.Net.Blueprint.Components;
 /// <summary>
 /// The type of the visualizer.
 /// </summary>
-public readonly record struct VisualizerType(Utf8 VisualizerTypeValue) : ILoggable<VisualizerType>
+public readonly record struct VisualizerType(global::Rerun.Net.Datatypes.Utf8 VisualizerTypeValue) : ILoggable<VisualizerType>
 {
     public static ComponentDescriptor Descriptor => new(null, null, "rerun.blueprint.components.VisualizerType");
 
     public static IArrowArray ToArrow(ReadOnlySpan<VisualizerType> data)
     {
-        var inner = new Utf8[data.Length];
+        var inner = new global::Rerun.Net.Datatypes.Utf8[data.Length];
         for (var i = 0; i < data.Length; i++)
             inner[i] = data[i].VisualizerTypeValue;
-        return Utf8.ToArrow(inner);
+        return global::Rerun.Net.Datatypes.Utf8.ToArrow(inner);
     }
 }
