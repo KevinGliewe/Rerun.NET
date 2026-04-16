@@ -203,16 +203,24 @@ jobs:
         include:
           - os: windows-latest
             rid: win-x64
+            dotnet-arch: x64
           - os: windows-11-arm
             rid: win-arm64
+            dotnet-arch: arm64
           - os: ubuntu-latest
             rid: linux-x64
+            dotnet-arch: x64
           - os: ubuntu-24.04-arm
             rid: linux-arm64
-          - os: macos-13
+            dotnet-arch: arm64
+          # No Intel macOS runners remain; run the x64 SDK under Rosetta
+          # on an ARM64 runner instead.
+          - os: macos-latest
             rid: osx-x64
+            dotnet-arch: x64
           - os: macos-latest
             rid: osx-arm64
+            dotnet-arch: arm64
     runs-on: ${{ matrix.os }}
     env:
       # Force an isolated package cache so we always consume the freshly
@@ -225,10 +233,11 @@ jobs:
         # No submodules needed - the smoke test project has zero
         # dependencies on the vendored rerun source tree.
 
-      - name: Setup .NET
+      - name: Setup .NET (${{ matrix.dotnet-arch }})
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+          architecture: ${{ matrix.dotnet-arch }}
 
       - name: Download built NuGet package
         uses: actions/download-artifact@v4
