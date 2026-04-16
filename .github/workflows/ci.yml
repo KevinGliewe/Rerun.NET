@@ -140,6 +140,8 @@ jobs:
   package:
     needs: [build-native, test]
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -183,8 +185,93 @@ jobs:
           name: nuget-package
           path: artifacts/*.nupkg
 
+  # Smoke test the built NuGet package on every supported RID.
+  #
+  # This is NOT a rebuild of the solution - it consumes the .nupkg produced
+  # by the `package` job via a PackageReference, then runs a tiny console
+  # app that exercises the native FFI path. The purpose is to catch
+  # packaging-level regressions that project-reference tests miss:
+  #   * missing runtimes/{rid}/native/* entries in the .nupkg
+  #   * wrong architecture binaries shipped for a RID
+  #   * DllImport resolver failing to find the native library
+  #     when the package is consumed as a NuGet dependency
+  package-smoke-test:
+    needs: package
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            dotnet-arch: x64
+          - os: windows-11-arm
+            rid: win-arm64
+            dotnet-arch: arm64
+          - os: ubuntu-latest
+            rid: linux-x64
+            dotnet-arch: x64
+          - os: ubuntu-24.04-arm
+            rid: linux-arm64
+            dotnet-arch: arm64
+          # No Intel macOS runners remain; run the x64 SDK under Rosetta
+          # on an ARM64 runner instead.
+          - os: macos-latest
+            rid: osx-x64
+            dotnet-arch: x64
+          - os: macos-latest
+            rid: osx-arm64
+            dotnet-arch: arm64
+    runs-on: ${{ matrix.os }}
+    env:
+      # Force an isolated package cache so we always consume the freshly
+      # built .nupkg, never a cached earlier version.
+      NUGET_PACKAGES: ${{ github.workspace }}/.smoke-nuget-cache
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+      - uses: actions/checkout@v4
+        # No submodules needed - the smoke test project has zero
+        # dependencies on the vendored rerun source tree.
+
+      - name: Setup .NET (${{ matrix.dotnet-arch }})
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+          architecture: ${{ matrix.dotnet-arch }}
+
+      - name: Download built NuGet package
+        uses: actions/download-artifact@v4
+        with:
+          name: nuget-package
+          path: artifacts
+
+      - name: List downloaded package
+        shell: bash
+        run: ls -la artifacts
+
+      - name: Restore smoke test against local package
+        shell: bash
+        working-directory: tests/Rerun.Net.PackageSmokeTest
+        run: |
+          dotnet restore \
+            -p:RerunNetVersion=${{ needs.package.outputs.version }}
+
+      - name: Build smoke test
+        shell: bash
+        working-directory: tests/Rerun.Net.PackageSmokeTest
+        run: |
+          dotnet build --no-restore -c Release \
+            -p:RerunNetVersion=${{ needs.package.outputs.version }}
+
+      - name: Run smoke test (${{ matrix.rid }})
+        shell: bash
+        working-directory: tests/Rerun.Net.PackageSmokeTest
+        run: |
+          dotnet run --no-build -c Release \
+            -p:RerunNetVersion=${{ needs.package.outputs.version }}
+
   deploy:
-    needs: [package, codegen-check]
+    needs: [package, package-smoke-test, codegen-check]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     permissions:

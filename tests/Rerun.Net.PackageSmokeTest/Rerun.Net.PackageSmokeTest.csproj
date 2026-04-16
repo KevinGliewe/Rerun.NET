@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Standalone smoke test that consumes the built Rerun.Net NuGet package via a
+    PackageReference (NOT a ProjectReference). Its purpose is to verify, on
+    every supported RID, that the published .nupkg works end-to-end:
+      1. restore succeeds from the produced package
+      2. the native rerun_c shared library is resolved from the package's
+         runtimes/{rid}/native/ folder
+      3. a minimal RecordingStream flow actually writes a non-empty .rrd file
+
+    This project is intentionally NOT listed in Rerun.Net.slnx, because the
+    Rerun.Net package it depends on only exists AFTER the `package` CI job has
+    built it. It is built and run standalone from the `package-smoke-test`
+    job in .github/workflows/ci.yml.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Rerun.Net.PackageSmokeTest</RootNamespace>
+    <AssemblyName>Rerun.Net.PackageSmokeTest</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <!-- Overridden from CI with the exact version the `package` job produced. -->
+    <RerunNetVersion Condition="'$(RerunNetVersion)' == ''">0.0.0-ci-local</RerunNetVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Rerun.Net" Version="$(RerunNetVersion)" />
+  </ItemGroup>
+
+</Project>
